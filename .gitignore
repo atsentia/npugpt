@@ -1,41 +1,76 @@
-# Prerequisites
-*.d
-
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
-
-# Precompiled Headers
-*.gch
-*.pch
-
-# Linker files
-*.ilk
-
-# Debugger Files
-*.pdb
-
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
-
-# Fortran module files
-*.mod
-*.smod
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Executables
+# Build artifacts
+build/
+Debug/
+Release/
 *.exe
+*.dll
+*.lib
+*.obj
+*.pdb
+*.log
 *.out
 *.app
 
-# debug information files
+# IDE files
+.vs/
+.vscode/
+*.vcxproj*
+*.sln
+
+# Qualcomm NPU SDK files (copied locally but not checked in)
+third_party/qualcomm/
+
+# Model weights and data files (large files)
+data/models/
+*.bin
+*.ckpt*
+*.h5
+*.safetensors
+
+# Temporary files
+*.tmp
+*.temp
+~*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Python artifacts (if any utility scripts)
+__pycache__/
+*.pyc
+*.pyo
+
+# CMake artifacts
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+*.cmake
+!CMakeLists.txt
+
+# Performance logs and benchmark results
+*.csv
+*_benchmark_results*
+*_performance_log*
+*_energy_report*
+
+# Claude Code hooks and settings (local development only)
+.claude/
+CLAUDE-SETTINGS.md
+
+# Standard C++ artifacts
+*.d
+*.slo
+*.lo
+*.o
+*.gch
+*.pch
+*.ilk
+*.so
+*.dylib
+*.mod
+*.smod
+*.lai
+*.la
+*.a
 *.dwo
