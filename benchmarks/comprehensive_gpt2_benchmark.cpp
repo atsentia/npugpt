@@ -9,8 +9,11 @@
  */
 
 #include "../src/npu_gpt2_engine.h"
-#include "../src/flashattention2_npu_gpt2_engine.cpp"
-#include "../src/flashattention2_fused_npu_gpt2_engine.cpp"
+// Forward declarations for implementations in src/
+extern std::unique_ptr<NPUGpt2Engine> create_baseline_engine();
+extern std::unique_ptr<NPUGpt2Engine> create_fused_engine();
+extern std::unique_ptr<NPUGpt2Engine> create_flashattention_engine();
+extern std::unique_ptr<NPUGpt2Engine> create_ultimate_engine();
 #include <iostream>
 #include <chrono>
 #include <fstream>

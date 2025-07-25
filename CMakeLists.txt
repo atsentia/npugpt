@@ -31,6 +31,9 @@ endif()
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/include
     ${CMAKE_CURRENT_SOURCE_DIR}/src
+    ${CMAKE_CURRENT_SOURCE_DIR}/picogpt/src
+    ${CMAKE_CURRENT_SOURCE_DIR}/third_party
+    ${CMAKE_CURRENT_SOURCE_DIR}/third_party/nlohmann
     ${QNN_SDK_ROOT}/include
 )
 
@@ -51,7 +54,12 @@ set(CORE_SOURCES
     src/fused_npu_gpt2_engine.cpp
     src/flashattention2_npu_gpt2_engine.cpp
     src/flashattention2_fused_npu_gpt2_engine.cpp
+    src/flashattention2_kvcache_npu_gpt2_engine.cpp
+    src/flashattention2_fused_kvcache_npu_gpt2_engine.cpp
     src/npu_callback_profiling.cpp
+    picogpt/src/gpt2_loader.cpp
+    picogpt/src/bpe_tokenizer.cpp
+    picogpt/src/simple_tokenizer.cpp
 )
 
 # Demo executable
@@ -86,12 +94,95 @@ add_executable(scalability_benchmark_suite
 
 target_link_libraries(scalability_benchmark_suite ${QNN_LIBRARIES})
 
+# Comprehensive benchmark with KV cache (6-way comparison)
+add_executable(comprehensive_gpt2_benchmark_with_kvcache
+    benchmarks/comprehensive_gpt2_benchmark_with_kvcache.cpp
+    ${CORE_SOURCES}
+)
+
+target_link_libraries(comprehensive_gpt2_benchmark_with_kvcache ${QNN_LIBRARIES})
+
+# Standalone KV cache demo
+add_executable(standalone_kvcache_demo
+    benchmarks/standalone_kvcache_demo.cpp
+)
+
+target_link_libraries(standalone_kvcache_demo)
+
+# Attention layer KV cache benchmark
+add_executable(attention_kvcache_benchmark
+    benchmarks/attention_kvcache_benchmark.cpp
+)
+
+target_link_libraries(attention_kvcache_benchmark)
+
+# Simple 6-way variant comparison
+add_executable(simple_6way_benchmark
+    simple_6way_benchmark.cpp
+)
+
+target_link_libraries(simple_6way_benchmark)
+
+# Real GPT-2 KV Cache benchmark with actual text generation
+add_executable(real_gpt2_kvcache_benchmark
+    real_gpt2_kvcache_benchmark.cpp
+    src/real_kvcache_gpt2_engine.cpp
+    ${CORE_SOURCES}
+)
+
+target_link_libraries(real_gpt2_kvcache_benchmark ${QNN_LIBRARIES})
+
+# Real KV Cache output demonstration
+add_executable(demo_real_kvcache_outputs
+    demo_real_kvcache_outputs.cpp
+)
+
+target_link_libraries(demo_real_kvcache_outputs)
+
+# Consolidated 6-way benchmark
+add_executable(consolidated_6way_benchmark
+    consolidated_6way_benchmark.cpp
+)
+
+target_link_libraries(consolidated_6way_benchmark)
+
+# Realistic KV cache benchmark
+add_executable(realistic_kvcache_benchmark
+    realistic_kvcache_benchmark.cpp
+)
+
+target_link_libraries(realistic_kvcache_benchmark)
+
+# Simple KV cache attention demo (minimal working example)
+add_executable(simple_kvcache_attention_demo
+    simple_kvcache_attention_demo.cpp
+)
+
+target_link_libraries(simple_kvcache_attention_demo)
+
+# Working NPU KV cache benchmark (real implementation)
+add_executable(working_npu_kvcache_benchmark
+    working_npu_kvcache_benchmark.cpp
+)
+
+target_link_libraries(working_npu_kvcache_benchmark)
+
 # Set output directory
 set_target_properties(
     npu_gpt2_demo
     comprehensive_gpt2_benchmark
     energy_efficiency_benchmark
     scalability_benchmark_suite
+    comprehensive_gpt2_benchmark_with_kvcache
+    standalone_kvcache_demo
+    attention_kvcache_benchmark
+    simple_6way_benchmark
+    real_gpt2_kvcache_benchmark
+    demo_real_kvcache_outputs
+    consolidated_6way_benchmark
+    realistic_kvcache_benchmark
+    simple_kvcache_attention_demo
+    working_npu_kvcache_benchmark
     PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}
 )

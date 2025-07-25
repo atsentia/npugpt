@@ -20,6 +20,10 @@ Release/
 # Qualcomm NPU SDK files (copied locally but not checked in)
 third_party/qualcomm/
 
+# PicoGPT dependencies (copied from parent project)
+picogpt/
+third_party/nlohmann/
+
 # Model weights and data files (large files)
 data/models/
 *.bin
